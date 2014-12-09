@@ -1,0 +1,13 @@
+language: cpp
+
+before_install:
+- sudo apt-get install squid3 -y
+
+install:
+- true
+
+before_script:
+- true
+
+script:
+- true
