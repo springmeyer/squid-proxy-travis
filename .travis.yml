@@ -1,7 +1,7 @@
 language: cpp
 
 before_install:
-- sudo apt-get install squid3 -y
+- sudo apt-get install -y squid3 net-tools
 
 install:
 - sudo cp squid.conf /etc/squid3/squid.conf
