@@ -1,7 +1,7 @@
 language: cpp
 
 before_install:
-- sudo apt-get install -y squid3 net-tools
+- sudo apt-get install -y squid3 net-tools ufw
 
 install:
 #- sudo cp squid.conf /etc/squid3/squid.conf
@@ -9,7 +9,19 @@ install:
 - netstat -plunt | grep 3128
 
 before_script:
-- wget -e use_proxy=yes -e http_proxy=127.0.0.1:3128 -e https_proxy=127.0.0.1:3128 https://github.com
+- echo y | sudo ufw enable
+- sudo ufw allow out 53/udp
+- sudo ufw allow out 3128/tcp
+
+script:
+- sudo ufw deny out https
+- sudo ufw deny out https
+- sudo ufw deny out http
+- sudo ufw allow 3128/tcp
+- sudo iptables -I OUTPUT -p tcp --dport 443 -m owner --uid-owner `id -u proxy` -j ACCEPT
+- sudo iptables -I OUTPUT -p tcp --dport 80 -m owner --uid-owner `id -u proxy` -j ACCEPT
+- curl -I "https://www.mapbox.com" --silent --proxy https://127.0.0.1:3128 | grep Server:
+#- wget -e use_proxy=yes -e http_proxy=127.0.0.1:3128 -e https_proxy=127.0.0.1:3128 https://github.com
 
 script:
 - sudo cat /var/log/squid3/access.log
