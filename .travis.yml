@@ -1,5 +1,10 @@
 language: cpp
 
+# https://forums.gentoo.org/viewtopic-t-812074-start-0.html
+# https://wiki.ubuntu.com/Testing/Proxy
+# http://stuvel.eu/transproxy
+# http://www.geeklab.info/2011/02/transparent-proxy-with-iptables-and-squid/
+
 before_install:
 - sudo apt-get install -y squid3 net-tools ufw
 
@@ -22,6 +27,4 @@ script:
 - sudo iptables -I OUTPUT -p tcp --dport 80 -m owner --uid-owner `id -u proxy` -j ACCEPT
 - curl -I "https://www.mapbox.com" --silent --proxy https://127.0.0.1:3128 | grep Server:
 #- wget -e use_proxy=yes -e http_proxy=127.0.0.1:3128 -e https_proxy=127.0.0.1:3128 https://github.com
-
-script:
 - sudo cat /var/log/squid3/access.log
