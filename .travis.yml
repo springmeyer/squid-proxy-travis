@@ -5,7 +5,7 @@ before_install:
 
 install:
 #- sudo cp squid.conf /etc/squid3/squid.conf
-- sudo service squid3 start
+#- sudo service squid3 start
 - sudo netstat -plunt
 - sudo netstat -plunt | grep 3128
 
