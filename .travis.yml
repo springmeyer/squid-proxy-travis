@@ -6,7 +6,7 @@ before_install:
 install:
 - sudo cp squid.conf /etc/squid3/squid.conf
 - sudo service squid3 restart
-- sudo netstat -plunt | grep 3128
+- sudo netstat -plunt
 
 before_script:
 - wget -e use_proxy=yes -e http_proxy=127.0.0.1:3128 -e https_proxy=127.0.0.1:3128 https://github.com
