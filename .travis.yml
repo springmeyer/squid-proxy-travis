@@ -27,3 +27,8 @@ script:
 - curl -I "https://www.mapbox.com" --proxy https://127.0.0.1:3128
 - wget -e use_proxy=yes -e http_proxy=127.0.0.1:3128 -e https_proxy=127.0.0.1:3128 https://github.com
 - sudo cat /var/log/squid3/access.log
+
+after_success:
+# should fail
+- curl -I "https://www.mapbox.com"
+- wget https://github.com
