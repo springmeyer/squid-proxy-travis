@@ -19,9 +19,9 @@ before_script:
 #- sudo ufw allow out 3128/tcp
 
 script:
-- sudo ufw default deny outgoing
-#- sudo ufw deny out https
-#- sudo ufw deny out http
+#- sudo ufw default deny outgoing
+- sudo ufw deny out https
+- sudo ufw deny out http
 #- sudo ufw allow 3128/tcp
 - sudo iptables -I OUTPUT -p tcp --dport 443 -m owner --uid-owner `id -u proxy` -j ACCEPT
 - sudo iptables -I OUTPUT -p tcp --dport 80  -m owner --uid-owner `id -u proxy` -j ACCEPT
@@ -29,7 +29,7 @@ script:
 - wget -e use_proxy=yes -e http_proxy=127.0.0.1:3128 -e https_proxy=127.0.0.1:3128 https://github.com
 - sudo cat /var/log/squid3/access.log
 
-after_success:
+#after_success:
 # should fail
-- curl -I "https://www.mapbox.com"
+#- curl -I "https://www.mapbox.com"
 #- wget https://github.com
