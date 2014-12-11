@@ -24,7 +24,7 @@ script:
 #- sudo ufw deny out http
 #- sudo ufw allow 3128/tcp
 - sudo iptables -I OUTPUT -p tcp --dport 443 -m owner --uid-owner `id -u proxy` -j ACCEPT
-#- sudo iptables -I OUTPUT -p tcp --dport 80 -m owner --uid-owner `id -u proxy` -j ACCEPT
+- sudo iptables -I OUTPUT -p tcp --dport 80  -m owner --uid-owner `id -u proxy` -j ACCEPT
 - curl -I "https://www.mapbox.com" --proxy https://127.0.0.1:3128
 - wget -e use_proxy=yes -e http_proxy=127.0.0.1:3128 -e https_proxy=127.0.0.1:3128 https://github.com
 - sudo cat /var/log/squid3/access.log
